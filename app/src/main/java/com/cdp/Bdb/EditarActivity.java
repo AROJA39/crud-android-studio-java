@@ -3,6 +3,7 @@ package com.cdp.Bdb;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,8 @@ import com.cdp.Bdb.db.DbContactos;
 import com.cdp.Bdb.entidades.Contactos;
 import com.cdp.agenda.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.regex.Pattern;
 
 public class EditarActivity extends AppCompatActivity {
 
@@ -62,7 +65,15 @@ public class EditarActivity extends AppCompatActivity {
         btnGuarda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!txtNombre.getText().toString().equals("") && !txtTelefono.getText().toString().equals("")) {
+                 if(txtNombre.length()== 0  ){
+                     txtNombre.setError("Nombre es obligatorio");
+                     txtNombre.requestFocus();
+                }else  if( txtTelefono.length()== 0 ){
+                     txtTelefono.setError("Telefono es obligatorio");
+                     txtTelefono.requestFocus();
+                }else  if(!validarEmail(txtCorreo.getText().toString())){
+                     txtCorreo.setError("Email no válido");
+                }else if (!txtNombre.getText().toString().equals("") && !txtTelefono.getText().toString().equals("")) {
                     correcto = dbContactos.editarContacto(id, txtNombre.getText().toString(), txtTelefono.getText().toString(), txtCorreo.getText().toString());
 
                     if(correcto){
@@ -71,11 +82,14 @@ public class EditarActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(EditarActivity.this, "ERROR AL MODIFICAR REGISTRO", Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Toast.makeText(EditarActivity.this, "DEBE LLENAR LOS CAMPOS OBLIGATORIOS", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private boolean validarEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 
     private void verRegistro(){
