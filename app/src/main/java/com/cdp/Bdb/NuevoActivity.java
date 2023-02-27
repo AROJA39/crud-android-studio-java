@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 public class NuevoActivity extends AppCompatActivity {
 
+    //variables de la vista
     EditText txtNombre, txtTelefono, txtCorreoElectronico;
     Button btnGuarda;
 
@@ -32,6 +33,7 @@ public class NuevoActivity extends AppCompatActivity {
         btnGuarda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //validaciones de todos los campos
 
               if(txtNombre.length()== 0  ){
                     txtNombre.setError("Nombre es obligatorio");
@@ -44,10 +46,12 @@ public class NuevoActivity extends AppCompatActivity {
                 }
                 if(!txtNombre.getText().toString().equals("") && !txtTelefono.getText().toString().equals("")) {
 
+                    //guardamos los datos a la bd
                     DbContactos dbContactos = new DbContactos(NuevoActivity.this);
                     long id = dbContactos.insertarContacto(txtNombre.getText().toString(), txtTelefono.getText().toString(), txtCorreoElectronico.getText().toString());
 
                     if (id > 0) {
+                        //toast es los mensajes de pantalla
                         Toast.makeText(NuevoActivity.this, "REGISTRO GUARDADO", Toast.LENGTH_LONG).show();
                         limpiar();
                     } else {
@@ -57,11 +61,13 @@ public class NuevoActivity extends AppCompatActivity {
             }
         });
     }
+    //metodo que valida el correo ingresado
     private boolean validarEmail(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
     }
 
+    //limpia el formulario
     private void limpiar() {
         txtNombre.setText("");
         txtTelefono.setText("");

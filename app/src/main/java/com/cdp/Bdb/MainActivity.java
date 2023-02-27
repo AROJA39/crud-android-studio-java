@@ -54,12 +54,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         txtBuscar.setOnQueryTextListener(this);
     }
 
+    // menu de 3 botones
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_principal, menu);
         return true;
     }
 
+    // opciones de seleccion de menu 3 botones
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.menuNuevo:
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
+    // metodo que se va a la ventana de nuevoactivity
     private void nuevoRegistro(){
         Intent intent = new Intent(this, NuevoActivity.class);
         startActivity(intent);

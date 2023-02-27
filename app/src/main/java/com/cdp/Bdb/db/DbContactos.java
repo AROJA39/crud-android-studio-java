@@ -11,6 +11,7 @@ import com.cdp.Bdb.entidades.Contactos;
 
 import java.util.ArrayList;
 
+// se extiende de bdhelper para  manipular la bd
 public class DbContactos extends DbHelper {
 
     Context context;
@@ -20,6 +21,7 @@ public class DbContactos extends DbHelper {
         this.context = context;
     }
 
+    //metodo  para insertar contactos , que recibe los parametros
     public long insertarContacto(String nombre, String telefono, String correo_electronico) {
 
         long id = 0;
